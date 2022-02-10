@@ -1,6 +1,7 @@
-import { h, ref, reactive, withDirectives } from "vue";
+import { h, ref, reactive, withDirectives, toRef } from "vue";
 
 export default {
+  name: "SlideFrame",
   setup(props, { slots }) {
     const slideSlots = reactive({
       value: slots.default(),
@@ -11,7 +12,10 @@ export default {
         "div",
         { class: "flex h-full w-full items-center justify-center" },
         slideSlots.value.map((slide, index) =>
-          h(slide, { isShow: index == slideSlots.current })
+          h(slide, {
+            isShow: index === slideSlots.current,
+            key: index,
+          })
         )
       ),
       h(
@@ -28,9 +32,11 @@ export default {
               onClick: (event) => {
                 if (slideSlots.current > 0) {
                   slideSlots.current--;
+                  console.log(slideSlots.current);
                   return;
                 }
-                slideSlots.current = slideSlots.length;
+                slideSlots.current = slideSlots.value.length - 1;
+                console.log(slideSlots.current);
               },
             },
             "<"
@@ -40,11 +46,13 @@ export default {
             {
               class: "text-3xl hover:text-gray-400",
               onClick: (event) => {
-                if (slideSlots.current < slideSlots.length) {
+                if (slideSlots.current < slideSlots.value.length - 1) {
                   slideSlots.current++;
+                  console.log(slideSlots.current);
                   return;
                 }
                 slideSlots.current = 0;
+                console.log(slideSlots.current);
               },
             },
             ">"

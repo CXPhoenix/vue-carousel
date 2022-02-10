@@ -1,4 +1,4 @@
-import { h, ref, reactive, withDirectives, toRef } from "vue";
+import { h, ref, reactive, withDirectives } from "vue";
 
 export default {
   name: "SlideFrame",

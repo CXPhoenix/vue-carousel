@@ -1,7 +1,7 @@
 import { h, ref, reactive, toRef, toRefs } from "vue";
 
 export default {
-  name: "SlideFrame",
+  name: "Slides",
   setup(props, { slots }) {
     const slideSlots = reactive({
       value: slots.default(),
@@ -9,10 +9,11 @@ export default {
     });
     const isCurrent = ref([
       ...slideSlots.value.map((item, index) =>
-        index === 0 ? ref(true) : ref(false)
+        index === slideSlots.current ? ref(true) : ref(false)
       ),
     ]);
-    const current = (current) => {
+    const current = (prev, current, isCurrent) => {
+      // isCurrent.value[prev].value = false;
       for (let i = 0; i < isCurrent.value.length; i++) {
         isCurrent.value[i].value = false;
       }
@@ -41,13 +42,14 @@ export default {
             {
               class: "text-3xl hover:text-gray-400",
               onClick: (event) => {
+                const prev = slideSlots.current;
                 if (slideSlots.current > 0) {
                   slideSlots.current--;
-                  current(slideSlots.current);
+                  current(prev, slideSlots.current, isCurrent);
                   return;
                 }
                 slideSlots.current = slideSlots.value.length - 1;
-                current(slideSlots.current);
+                current(prev, slideSlots.current, isCurrent);
               },
             },
             "<"
@@ -57,13 +59,14 @@ export default {
             {
               class: "text-3xl hover:text-gray-400",
               onClick: (event) => {
+                const prev = slideSlots.current;
                 if (slideSlots.current < slideSlots.value.length - 1) {
                   slideSlots.current++;
-                  current(slideSlots.current);
+                  current(prev, slideSlots.current, isCurrent);
                   return;
                 }
                 slideSlots.current = 0;
-                current(slideSlots.current);
+                current(prev, slideSlots.current, isCurrent);
               },
             },
             ">"

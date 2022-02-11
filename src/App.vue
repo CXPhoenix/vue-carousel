@@ -1,6 +1,6 @@
 <script setup>
-import SlideFrame from "./components/SlideFrame";
-import CarouselSlide from "./components/CarouselSlide.vue";
+import Slides from "./components/Slides.js";
+import Slide from "./components/Slide.vue";
 </script>
 
 <template>
@@ -8,10 +8,10 @@ import CarouselSlide from "./components/CarouselSlide.vue";
     <div
       class="flex min-h-[25rem] w-[35rem] items-center justify-center rounded-lg border-2 border-gray-400"
     >
-      <SlideFrame>
-        <CarouselSlide>我是第一張</CarouselSlide>
-        <CarouselSlide>我是第二張</CarouselSlide>
-      </SlideFrame>
+      <Slides>
+        <Slide>第一章</Slide>
+        <Slide>第二章</Slide>
+      </Slides>
     </div>
   </div>
 </template>

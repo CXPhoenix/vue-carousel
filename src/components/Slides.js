@@ -12,7 +12,7 @@ export default {
         index === slideSlots.current ? ref(true) : ref(false)
       ),
     ]);
-    const current = (prev, current, isCurrent) => {
+    const slideSwitch = (prev, current, isCurrent) => {
       // isCurrent.value[prev].value = false;
       for (let i = 0; i < isCurrent.value.length; i++) {
         isCurrent.value[i].value = false;
@@ -45,11 +45,11 @@ export default {
                 const prev = slideSlots.current;
                 if (slideSlots.current > 0) {
                   slideSlots.current--;
-                  current(prev, slideSlots.current, isCurrent);
+                  slideSwitch(prev, slideSlots.current, isCurrent);
                   return;
                 }
                 slideSlots.current = slideSlots.value.length - 1;
-                current(prev, slideSlots.current, isCurrent);
+                slideSwitch(prev, slideSlots.current, isCurrent);
               },
             },
             "<"
@@ -62,11 +62,11 @@ export default {
                 const prev = slideSlots.current;
                 if (slideSlots.current < slideSlots.value.length - 1) {
                   slideSlots.current++;
-                  current(prev, slideSlots.current, isCurrent);
+                  slideSwitch(prev, slideSlots.current, isCurrent);
                   return;
                 }
                 slideSlots.current = 0;
-                current(prev, slideSlots.current, isCurrent);
+                slideSwitch(prev, slideSlots.current, isCurrent);
               },
             },
             ">"

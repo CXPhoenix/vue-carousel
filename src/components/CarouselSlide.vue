@@ -9,15 +9,13 @@
 <script>
 import { ref } from "@vue/reactivity";
 export default {
-  props: {
-    isShow: Boolean,
+  props: ["isShow"],
+  setup(props) {
+    const isShow = props.isShow;
+    return {
+      isShow,
+    };
   },
-  // setup(props) {
-  //   const isShow = props.isShow;
-  //   return {
-  //     isShow,
-  //   };
-  // },
 };
 </script>
 

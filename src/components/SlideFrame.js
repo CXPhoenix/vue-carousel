@@ -1,4 +1,4 @@
-import { h, ref, reactive, withDirectives } from "vue";
+import { h, ref, reactive, toRef, toRefs } from "vue";
 
 export default {
   name: "SlideFrame",
@@ -7,13 +7,24 @@ export default {
       value: slots.default(),
       current: 0,
     });
+    const isCurrent = ref([
+      ...slideSlots.value.map((item, index) =>
+        index === 0 ? ref(true) : ref(false)
+      ),
+    ]);
+    const current = (current) => {
+      for (let i = 0; i < isCurrent.value.length; i++) {
+        isCurrent.value[i].value = false;
+      }
+      isCurrent.value[current].value = true;
+    };
     const frame = h("div", { class: "relative h-full w-full" }, [
       h(
         "div",
         { class: "flex h-full w-full items-center justify-center" },
         slideSlots.value.map((slide, index) =>
           h(slide, {
-            isShow: index === slideSlots.current,
+            isShow: isCurrent.value[index],
             key: index,
           })
         )
@@ -32,11 +43,11 @@ export default {
               onClick: (event) => {
                 if (slideSlots.current > 0) {
                   slideSlots.current--;
-                  console.log(slideSlots.current);
+                  current(slideSlots.current);
                   return;
                 }
                 slideSlots.current = slideSlots.value.length - 1;
-                console.log(slideSlots.current);
+                current(slideSlots.current);
               },
             },
             "<"
@@ -48,11 +59,11 @@ export default {
               onClick: (event) => {
                 if (slideSlots.current < slideSlots.value.length - 1) {
                   slideSlots.current++;
-                  console.log(slideSlots.current);
+                  current(slideSlots.current);
                   return;
                 }
                 slideSlots.current = 0;
-                console.log(slideSlots.current);
+                current(slideSlots.current);
               },
             },
             ">"

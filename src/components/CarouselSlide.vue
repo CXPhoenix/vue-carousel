@@ -12,12 +12,12 @@ export default {
   props: {
     isShow: Boolean,
   },
-  setup(props) {
-    const isShow = props.isShow;
-    return {
-      isShow,
-    };
-  },
+  // setup(props) {
+  //   const isShow = props.isShow;
+  //   return {
+  //     isShow,
+  //   };
+  // },
 };
 </script>
 
